@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-11-20T13:14:25.852263+00:00",
+  "atualizado_em": "2026-11-20T18:46:29.634006+00:00",
   "softwares": [
     {
       "id": "exscan-trak",
@@ -17,7 +17,7 @@
       "hash_conteudo": "72265d92159ade1e29bd4dbb6b870a5f98fe3200d4616f51236f0f45d5f9f1e9",
       "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-19T11:28:57.591866+00:00",
-      "ultima_verificacao": "2026-11-20T13:14:25.852263+00:00",
+      "ultima_verificacao": "2026-11-20T18:46:29.634006+00:00",
       "ultimo_erro": null
     },
     {
@@ -40,7 +40,7 @@
       "hash_conteudo": "07efb559f62b27d6bb34972fe704560d42c7507221b4db43662f78d2bcc60252",
       "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-20T11:06:04.754129+00:00",
-      "ultima_verificacao": "2026-11-20T13:14:25.852263+00:00",
+      "ultima_verificacao": "2026-11-20T18:46:29.634006+00:00",
       "ultimo_erro": null
     },
     {
@@ -58,7 +58,7 @@
       "hash_conteudo": "fe5b620eecae357cafd896b76e57b8e0bc8328b14af7f3461364d6a15ec5665e",
       "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-20T12:52:38.568207+00:00",
-      "ultima_verificacao": "2026-11-20T13:14:25.852263+00:00",
+      "ultima_verificacao": "2026-11-20T18:46:29.634006+00:00",
       "ultimo_erro": null
     },
     {
@@ -78,7 +78,7 @@
       "hash_conteudo": "d1e70bd32f023497545a80c32baf7f58f19d57c4415df309c4ffab611a7aa499",
       "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-20T12:52:38.568207+00:00",
-      "ultima_verificacao": "2026-11-20T13:14:25.852263+00:00",
+      "ultima_verificacao": "2026-11-20T18:46:29.634006+00:00",
       "ultimo_erro": null
     },
     {
@@ -99,7 +99,7 @@
       "hash_conteudo": "9d89b07226d70eb6506e65ed35e26e8ea08ae30da5057a8d8eaddbb05ea0cd10",
       "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-20T12:52:38.568207+00:00",
-      "ultima_verificacao": "2026-11-20T13:14:25.852263+00:00",
+      "ultima_verificacao": "2026-11-20T18:46:29.634006+00:00",
       "ultimo_erro": null
     },
     {
@@ -119,7 +119,7 @@
       "hash_conteudo": "720c63991cf6c8e116968178ced2b6b5e0fa9fb721f07444dc008cf8119b42fa",
       "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-20T12:52:38.568207+00:00",
-      "ultima_verificacao": "2026-11-20T13:14:25.852263+00:00",
+      "ultima_verificacao": "2026-11-20T18:46:29.634006+00:00",
       "ultimo_erro": null
     },
     {
@@ -139,7 +139,7 @@
       "hash_conteudo": "5d9bf51487efce1e7ade79e1f2b173aef43999405d93d00f2cab48723b2f4733",
       "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-20T13:14:25.852263+00:00",
-      "ultima_verificacao": "2026-11-20T13:14:25.852263+00:00",
+      "ultima_verificacao": "2026-11-20T18:46:29.634006+00:00",
       "ultimo_erro": null
     },
     {
@@ -160,7 +160,7 @@
       "hash_conteudo": "74d17b2fe11330d65d0fd5faf299dfd20468bb51c139e361a88c78b237892df3",
       "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-20T12:52:38.568207+00:00",
-      "ultima_verificacao": "2026-11-20T13:14:25.852263+00:00",
+      "ultima_verificacao": "2026-11-20T18:46:29.634006+00:00",
       "ultimo_erro": null
     },
     {
@@ -178,7 +178,7 @@
       "hash_conteudo": "88f3f6d91ab7a010437dfc31b2af3d7302fb2315f3c35523398d0d57cb371938",
       "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-20T12:52:38.568207+00:00",
-      "ultima_verificacao": "2026-11-20T13:14:25.852263+00:00",
+      "ultima_verificacao": "2026-11-20T18:46:29.634006+00:00",
       "ultimo_erro": null
     },
     {
@@ -199,7 +199,7 @@
       "hash_conteudo": "9c2a9ab3688b28313547eb0edbe979b3aa67bc4fa00b6a86c141a4639a7c347b",
       "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-20T12:52:38.568207+00:00",
-      "ultima_verificacao": "2026-11-20T13:14:25.852263+00:00",
+      "ultima_verificacao": "2026-11-20T18:46:29.634006+00:00",
       "ultimo_erro": null
     },
     {
@@ -218,7 +218,7 @@
       "hash_conteudo": "05ea178b418c8e959a95b9d417148938a5623c2c359bc6dd28f2b0c03d72f9f1",
       "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-20T12:52:38.568207+00:00",
-      "ultima_verificacao": "2026-11-20T13:14:25.852263+00:00",
+      "ultima_verificacao": "2026-11-20T18:46:29.634006+00:00",
       "ultimo_erro": null
     },
     {
@@ -237,7 +237,7 @@
       "hash_conteudo": "ae4a8f8ab38496863c3816bb0baa1beff1e773005fe3d02d69e47d44b22875a3",
       "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-20T12:52:38.568207+00:00",
-      "ultima_verificacao": "2026-11-20T13:14:25.852263+00:00",
+      "ultima_verificacao": "2026-11-20T18:46:29.634006+00:00",
       "ultimo_erro": null
     },
     {
@@ -260,7 +260,7 @@
       "hash_conteudo": "1088706bd681ebcdd8d7c694ca39b7eab4c5a37830448de750bfe74fa1f95fe9",
       "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-20T12:52:38.568207+00:00",
-      "ultima_verificacao": "2026-11-20T13:14:25.852263+00:00",
+      "ultima_verificacao": "2026-11-20T18:46:29.634006+00:00",
       "ultimo_erro": null
     },
     {
@@ -276,10 +276,10 @@
       "historico_versoes": [
         "2026.1.1"
       ],
-      "hash_conteudo": "66142547c5d43edc76405edf266df79317a164cae546de87cc8138c8e82c977d",
+      "hash_conteudo": "375c568c2ef1cd99bc4df58ed67fe59feb4dca0d14c6045d542043328eae4d7e",
       "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-20T12:52:38.568207+00:00",
-      "ultima_verificacao": "2026-11-20T13:14:25.852263+00:00",
+      "ultima_verificacao": "2026-11-20T18:46:29.634006+00:00",
       "ultimo_erro": null
     },
     {
@@ -294,10 +294,10 @@
       "historico_versoes": [
         "2026.1.0"
       ],
-      "hash_conteudo": "d86996500bf531def5391bc55642408c337efd29c8e27e95e63734e7585b396f",
+      "hash_conteudo": "b11b877d1d9aff61ef257e669c5087a39695a9084768e218788c42adae028682",
       "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-20T09:22:47.573387+00:00",
-      "ultima_verificacao": "2026-11-20T13:14:25.852263+00:00",
+      "ultima_verificacao": "2026-11-20T18:46:29.634006+00:00",
       "ultimo_erro": null
     },
     {
@@ -313,10 +313,10 @@
       "historico_versoes": [
         "v2024.3.2"
       ],
-      "hash_conteudo": "e3eb66fdc6e681a6fd8a3db6c57c604f2df46175a57ef5c289e0a5c9be7cccce",
+      "hash_conteudo": "43e03ffe6b86fe3e1e4ba410fc457efbbf9fb867858d9102d9a0ffa2584f4d2a",
       "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-20T12:52:38.568207+00:00",
-      "ultima_verificacao": "2026-11-20T13:14:25.852263+00:00",
+      "ultima_verificacao": "2026-11-20T18:46:29.634006+00:00",
       "ultimo_erro": null
     },
     {
@@ -331,10 +331,10 @@
       "historico_versoes": [
         "2026.1.0"
       ],
-      "hash_conteudo": "eb8e519bec278607fe49c9409534d8f5fe62d7db1a413b36612321979cc758a9",
+      "hash_conteudo": "ea2a75382e3cb80698c5c7f00e418f440b5156491422458daeaadd1b3788f843",
       "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-20T09:19:17.412006+00:00",
-      "ultima_verificacao": "2026-11-20T13:14:25.852263+00:00",
+      "ultima_verificacao": "2026-11-20T18:46:29.634006+00:00",
       "ultimo_erro": null
     },
     {
@@ -349,10 +349,10 @@
       "historico_versoes": [
         "2026.2"
       ],
-      "hash_conteudo": "57e3f3145d2d0a47b0dcbb49498892c25cbbee2d93b93e5f2c4db60722469827",
+      "hash_conteudo": "45908a92cfd7f580718fdced7d18404f333742786193a3f0d14b7d088b2be4a8",
       "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-20T12:52:38.568207+00:00",
-      "ultima_verificacao": "2026-11-20T13:14:25.852263+00:00",
+      "ultima_verificacao": "2026-11-20T18:46:29.634006+00:00",
       "ultimo_erro": null
     },
     {
@@ -367,10 +367,10 @@
       "historico_versoes": [
         "2026.2"
       ],
-      "hash_conteudo": "4afc75736a0173cdf1bc025f503bbee0b095c8804cfea30b887058e52ce0a6d9",
+      "hash_conteudo": "98999fbbb0ffdde20c4cea4d25a351984e57b3e9f4fc83fef74a4ed9e430c579",
       "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-20T12:52:38.568207+00:00",
-      "ultima_verificacao": "2026-11-20T13:14:25.852263+00:00",
+      "ultima_verificacao": "2026-11-20T18:46:29.634006+00:00",
       "ultimo_erro": null
     }
   ]
