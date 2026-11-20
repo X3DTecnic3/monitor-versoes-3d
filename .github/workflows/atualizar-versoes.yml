@@ -1,1 +1,45 @@
+name: Verificar versões de software
 
+on:
+  schedule:
+    # Corre de 6 em 6 horas (00:00, 06:00, 12:00, 18:00 UTC)
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+    # Permite correr manualmente a partir do separador Actions no GitHub
+
+permissions:
+  contents: write
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descarregar código do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependências Python e Chromium
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4 playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Executar script de verificação
+        run: python verificar_versoes.py
+
+      - name: Guardar versoes.json atualizado no repositório
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add versoes.json
+          if git diff --staged --quiet; then
+            echo "Sem alterações no versoes.json."
+          else
+            git commit -m "Atualizar versoes.json automaticamente"
+            git push
+          fi
