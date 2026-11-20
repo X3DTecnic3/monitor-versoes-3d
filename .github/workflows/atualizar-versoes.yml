@@ -29,8 +29,8 @@ jobs:
           pip install requests beautifulsoup4 playwright
           python -m playwright install --with-deps chromium
 
-      - name: Executar script de verificação
-        run: python verificar_versoes.py
+      - name: Executar versão mais recente do script
+        run: python executar_mais_recente.py
 
       - name: Guardar versoes.json atualizado no repositório
         run: |
