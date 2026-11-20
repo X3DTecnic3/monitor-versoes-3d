@@ -1,0 +1,81 @@
+{
+  "atualizado_em": "2026-11-20T11:06:04.754129+00:00",
+  "softwares": [
+    {
+      "id": "exscan-trak",
+      "nome": "EXScan Trak",
+      "fabricante": "Shining 3D / EinScan",
+      "url": "https://support.einscan.com/en/support/solutions/articles/60001647097-download-exscan-trak-software",
+      "versao_atual": "1.0.2.3",
+      "versoes_candidatas": [
+        "1.0.2.3",
+        "1.0.2.1"
+      ],
+      "historico_versoes": [
+        "1.0.2.3"
+      ],
+      "hash_conteudo": "72265d92159ade1e29bd4dbb6b870a5f98fe3200d4616f51236f0f45d5f9f1e9",
+      "nova_versao": true,
+      "data_ultima_atualizacao": "2026-11-19T11:28:57.591866+00:00",
+      "ultima_verificacao": "2026-11-20T11:06:04.754129+00:00"
+    },
+    {
+      "id": "exscan-rigil",
+      "nome": "EXScan Rigil Desktop",
+      "fabricante": "Shining 3D / EinScan",
+      "url": "https://support.einscan.com/en/support/solutions/articles/60001589102-download-exscan-rigil-desktop-software-for-einscan-rigil-series-",
+      "versao_atual": "1.4.0-37",
+      "versoes_candidatas": [
+        "1.4.0-37",
+        "1.4.0-23",
+        "26.2",
+        "1.3.2-7",
+        "1.3.2-9"
+      ],
+      "historico_versoes": [
+        "1.4.0-37",
+        "1.4.0"
+      ],
+      "hash_conteudo": "07efb559f62b27d6bb34972fe704560d42c7507221b4db43662f78d2bcc60252",
+      "nova_versao": true,
+      "data_ultima_atualizacao": "2026-11-20T11:06:04.754129+00:00",
+      "ultima_verificacao": "2026-11-20T11:06:04.754129+00:00"
+    },
+    {
+      "id": "geomagic-design-x",
+      "nome": "Geomagic Design X",
+      "fabricante": "Hexagon / Geomagic",
+      "url": "https://support.geomagic.com/s/article/GeomagicDesignX?language=en_US",
+      "versao_atual": "2026.1.0",
+      "versoes_candidatas": [
+        "2026.1.0",
+        "20.10"
+      ],
+      "historico_versoes": [
+        "2026.1.0"
+      ],
+      "hash_conteudo": "802ddaf3446a75a07496be7a231c571aa07ee7f1c312f7551c3d893b105805fd",
+      "nova_versao": true,
+      "data_ultima_atualizacao": "2026-11-20T09:22:47.573387+00:00",
+      "ultima_verificacao": "2026-11-20T11:06:04.754129+00:00"
+    },
+    {
+      "id": "geomagic-control-x",
+      "nome": "Geomagic Control X",
+      "fabricante": "Hexagon / Geomagic",
+      "url": "https://support.geomagic.com/s/article/Geomagic-Control-X?language=en_US",
+      "versao_atual": "2026.1.0",
+      "versoes_candidatas": [
+        "2026.1.0",
+        "29.10"
+      ],
+      "historico_versoes": [
+        "2026.1.0"
+      ],
+      "hash_conteudo": "816e85da209814ee3c842136bc09504233e5c652333406eae7d7bb25595c7499",
+      "nova_versao": true,
+      "data_ultima_atualizacao": "2026-11-20T09:19:17.412006+00:00",
+      "ultima_verificacao": "2026-11-20T11:06:04.754129+00:00"
+    }
+  ]
+}

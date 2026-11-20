@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monitor de Versões — Scanners &amp; Geomagic</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --card-border: #334155;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --new-bg: rgba(34, 197, 94, 0.14);
+      --new-border: #22c55e;
+      --new-text: #4ade80;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 1.75rem;
+    }
+
+    h1 {
+      font-size: 1.65rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .banner-novidades {
+      display: none;
+      background: var(--new-bg);
+      border: 1px solid var(--new-border);
+      color: var(--new-text);
+      padding: 0.85rem 1.1rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .filtros {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-filtro {
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--card-border);
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      transition: 0.15s ease;
+    }
+
+    .btn-filtro:hover {
+      border-color: var(--accent);
+    }
+
+    .btn-filtro.ativo {
+      background: var(--accent);
+      color: #082f49;
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .cartao {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.9rem;
+    }
+
+    .cartao.nova-versao {
+      border-color: var(--new-border);
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.25);
+    }
+
+    .topo-cartao {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .fabricante {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .titulo-software {
+      font-size: 1.12rem;
+      font-weight: 700;
+      margin-top: 0.15rem;
+    }
+
+    .badge-novo {
+      background: var(--new-border);
+      color: #052e16;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.22rem 0.55rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .versao-box {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 0.65rem 0.8rem;
+    }
+
+    .versao-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .versao-valor {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .rodape-cartao {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .link-download {
+      color: var(--text);
+      background: #0284c7;
+      text-decoration: none;
+      padding: 0.45rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+
+    .link-download:hover {
+      background: #0369a1;
+    }
+
+    .aviso-local {
+      background: rgba(245, 158, 11, 0.14);
+      border: 1px solid #f59e0b;
+      color: #fcd34d;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-top: 1rem;
+      font-size: 0.92rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Monitor de Versões de Software</h1>
+      <p class="meta" id="ultima-atualizacao">A carregar dados...</p>
+    </header>
+
+    <div class="banner-novidades" id="banner-novidades"></div>
+
+    <div class="filtros" id="filtros">
+      <button class="btn-filtro ativo" data-filtro="todos">Todos</button>
+      <button class="btn-filtro" data-filtro="Shining 3D / EinScan">Shining 3D / EinScan</button>
+      <button class="btn-filtro" data-filtro="Hexagon / Geomagic">Hexagon / Geomagic</button>
+    </div>
+
+    <main class="grid" id="lista-softwares"></main>
+    <div id="mensagem-erro"></div>
+  </div>
+
+  <script>
+    let todosSoftwares = [];
+    let filtroAtual = "todos";
+
+    function formatarData(isoString) {
+      if (!isoString) return "Sem registo";
+      const data = new Date(isoString);
+      if (Number.isNaN(data.getTime())) return isoString;
+      return data.toLocaleString("pt-PT", {
+        dateStyle: "short",
+        timeStyle: "short"
+      });
+    }
+
+    function renderizar() {
+      const grid = document.getElementById("lista-softwares");
+      const banner = document.getElementById("banner-novidades");
+
+      const filtrados = filtroAtual === "todos"
+        ? todosSoftwares
+        : todosSoftwares.filter((item) => item.fabricante === filtroAtual);
+
+      const novidades = todosSoftwares.filter((item) => Boolean(item.nova_versao));
+      if (novidades.length > 0) {
+        banner.style.display = "block";
+        banner.textContent = `Aviso: ${novidades.length} software(s) com atualização marcada como nova (${novidades.map(n => n.nome).join(", ")}).`;
+      } else {
+        banner.style.display = "none";
+      }
+
+      grid.innerHTML = filtrados.map((item) => {
+        const isNova = Boolean(item.nova_versao);
+        const versao = item.versao_atual || "Não detetada";
+        const dataRef = item.data_ultima_atualizacao || item.ultima_verificacao;
+
+        return `
+          <article class="cartao ${isNova ? "nova-versao" : ""}">
+            <div>
+              <div class="topo-cartao">
+                <div>
+                  <div class="fabricante">${item.fabricante || "Software"}</div>
+                  <div class="titulo-software">${item.nome}</div>
+                </div>
+                ${isNova ? `<span class="badge-novo">NOVA VERSÃO</span>` : ""}
+              </div>
+
+              <div class="versao-box" style="margin-top: 0.85rem;">
+                <div class="versao-label">Versão atual</div>
+                <div class="versao-valor">${versao}</div>
+              </div>
+            </div>
+
+            <div class="rodape-cartao">
+              <span>Verificado: ${formatarData(dataRef)}</span>
+              <a class="link-download" href="${item.url}" target="_blank" rel="noopener noreferrer">
+                Página oficial
+              </a>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    async function iniciar() {
+      const metaEl = document.getElementById("ultima-atualizacao");
+      const erroEl = document.getElementById("mensagem-erro");
+
+      try {
+        const resposta = await fetch("./versoes.json", { cache: "no-store" });
+        if (!resposta.ok) {
+          throw new Error(`HTTP ${resposta.status}`);
+        }
+        const dados = await resposta.json();
+        todosSoftwares = dados.softwares || [];
+        metaEl.textContent = `Última verificação automática: ${formatarData(dados.atualizado_em)}`;
+        renderizar();
+      } catch (erro) {
+        metaEl.textContent = "Não foi possível ler o versoes.json";
+        erroEl.innerHTML = `
+          <div class="aviso-local">
+            <strong>Nota ao abrir localmente:</strong> muitos navegadores bloqueiam a leitura de ficheiros locais (<code>versoes.json</code>) quando abres o <code>index.html</code> com duplo clique (<code>file://</code>).
+            Assim que o colocares num servidor local ou no <strong>GitHub Pages</strong>, ele carrega automaticamente.
+          </div>
+        `;
+      }
+    }
+
+    document.getElementById("filtros").addEventListener("click", (evento) => {
+      const botao = evento.target.closest(".btn-filtro");
+      if (!botao) return;
+
+      document.querySelectorAll(".btn-filtro").forEach((b) => b.classList.remove("ativo"));
+      botao.classList.add("ativo");
+      filtroAtual = botao.dataset.filtro;
+      renderizar();
+    });
+
+    iniciar();
+  </script>
+</body>
+</html>
