@@ -257,6 +257,11 @@
     let todosSoftwares = [];
     let filtroAtual = "todos";
 
+    const ordemFabricante = {
+      "Shining 3D / EinScan": 1,
+      "Hexagon / Geomagic": 2
+    };
+
     function formatarData(isoString) {
       if (!isoString) return "Sem registo";
       const data = new Date(isoString);
@@ -281,6 +286,12 @@
 
         if (aNova !== bNova) {
           return bNova - aNova;
+        }
+
+        const fabA = ordemFabricante[a.fabricante] ?? 99;
+        const fabB = ordemFabricante[b.fabricante] ?? 99;
+        if (fabA !== fabB) {
+          return fabA - fabB;
         }
 
         if (aNova === 1 && bNova === 1) {
