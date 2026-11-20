@@ -65,6 +65,7 @@ FONTES = [
         "fabricante": "Shining 3D / EinScan",
         "url": "https://support.einscan.com/en/support/solutions/articles/60000999741-the-latest-software-for-einscan-hx-hx2",
         "usar_browser": False,
+        "ignorar_versoes": ["5.0"],
     },
     {
         "id": "einscan-pro-2x-v2-pro-hd",
@@ -243,18 +244,21 @@ def ler_texto_playwright(url: str) -> str:
         return texto_visivel
 
 
-def escolher_versao_principal(texto: str) -> tuple[str | None, list[str]]:
+def escolher_versao_principal(
+    texto: str, ignorar: list[str] | None = None
+) -> tuple[str | None, list[str]]:
+    ignorados_set = {v.lower() for v in (ignorar or [])}
     linhas = texto.splitlines()
     candidatas_ordenadas = []
 
     for linha in linhas:
         if re.search(r"\b(version|ver\.?|release|download|update)\b", linha, re.IGNORECASE):
             for match in VERSION_REGEX.findall(linha):
-                if match not in candidatas_ordenadas:
+                if match.lower() not in ignorados_set and match not in candidatas_ordenadas:
                     candidatas_ordenadas.append(match)
 
     for match in VERSION_REGEX.findall(texto):
-        if match not in candidatas_ordenadas:
+        if match.lower() not in ignorados_set and match not in candidatas_ordenadas:
             candidatas_ordenadas.append(match)
 
     versao_principal = candidatas_ordenadas[0] if candidatas_ordenadas else None
@@ -313,7 +317,7 @@ def main() -> None:
                 else:
                     texto = texto_teste
 
-            versao_atual, candidatas = escolher_versao_principal(texto)
+            versao_atual, candidatas = escolher_versao_principal(texto, fonte.get("ignorar_versoes"))
             hash_texto = hashlib.sha256(texto.encode("utf-8")).hexdigest()
 
         except Exception as exc:
