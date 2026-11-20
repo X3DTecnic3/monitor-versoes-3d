@@ -275,6 +275,23 @@
         ? todosSoftwares
         : todosSoftwares.filter((item) => item.fabricante === filtroAtual);
 
+      const filtradosOrdenados = [...filtrados].sort((a, b) => {
+        const aNova = a.nova_versao ? 1 : 0;
+        const bNova = b.nova_versao ? 1 : 0;
+
+        if (aNova !== bNova) {
+          return bNova - aNova;
+        }
+
+        if (aNova === 1 && bNova === 1) {
+          const dataA = new Date(a.data_ultima_atualizacao || 0).getTime();
+          const dataB = new Date(b.data_ultima_atualizacao || 0).getTime();
+          return dataB - dataA;
+        }
+
+        return 0;
+      });
+
       const novidades = todosSoftwares.filter((item) => Boolean(item.nova_versao));
       if (novidades.length > 0) {
         banner.style.display = "block";
@@ -283,7 +300,7 @@
         banner.style.display = "none";
       }
 
-      grid.innerHTML = filtrados.map((item) => {
+      grid.innerHTML = filtradosOrdenados.map((item) => {
         const isNova = Boolean(item.nova_versao);
         const versao = item.versao_atual || "Não detetada";
         const dataVerificacao = item.ultima_verificacao || item.data_ultima_atualizacao;
