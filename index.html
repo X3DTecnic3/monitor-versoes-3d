@@ -15,6 +15,9 @@
       --new-bg: rgba(34, 197, 94, 0.14);
       --new-border: #22c55e;
       --new-text: #4ade80;
+      --err-bg: rgba(245, 158, 11, 0.14);
+      --err-border: #f59e0b;
+      --err-text: #fcd34d;
     }
 
     * {
@@ -161,6 +164,15 @@
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     }
 
+    .alerta-erro {
+      background: var(--err-bg);
+      border: 1px solid var(--err-border);
+      color: var(--err-text);
+      font-size: 0.78rem;
+      padding: 0.45rem 0.65rem;
+      border-radius: 8px;
+    }
+
     .rodape-cartao {
       display: flex;
       justify-content: space-between;
@@ -178,6 +190,7 @@
       border-radius: 8px;
       font-size: 0.84rem;
       font-weight: 600;
+      white-space: nowrap;
     }
 
     .link-download:hover {
@@ -185,9 +198,9 @@
     }
 
     .aviso-local {
-      background: rgba(245, 158, 11, 0.14);
-      border: 1px solid #f59e0b;
-      color: #fcd34d;
+      background: var(--err-bg);
+      border: 1px solid var(--err-border);
+      color: var(--err-text);
       padding: 1rem;
       border-radius: 10px;
       margin-top: 1rem;
@@ -247,7 +260,7 @@
       grid.innerHTML = filtrados.map((item) => {
         const isNova = Boolean(item.nova_versao);
         const versao = item.versao_atual || "Não detetada";
-        const dataRef = item.data_ultima_atualizacao || item.ultima_verificacao;
+        const dataVerificacao = item.ultima_verificacao || item.data_ultima_atualizacao;
 
         return `
           <article class="cartao ${isNova ? "nova-versao" : ""}">
@@ -264,10 +277,16 @@
                 <div class="versao-label">Versão atual</div>
                 <div class="versao-valor">${versao}</div>
               </div>
+
+              ${item.ultimo_erro ? `
+                <div class="alerta-erro" style="margin-top: 0.65rem;">
+                  Falha na última leitura: ${item.ultimo_erro}
+                </div>
+              ` : ""}
             </div>
 
             <div class="rodape-cartao">
-              <span>Verificado: ${formatarData(dataRef)}</span>
+              <span>Verificado: ${formatarData(dataVerificacao)}</span>
               <a class="link-download" href="${item.url}" target="_blank" rel="noopener noreferrer">
                 Página oficial
               </a>
