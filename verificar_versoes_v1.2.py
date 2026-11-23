@@ -122,6 +122,7 @@ FONTES = [
         "fabricante": "Shining 3D",
         "url": "https://support.einstar.com/support/solutions/articles/60001436421-download-starvision-pc-software-for-einstar-vega-",
         "usar_browser": False,
+        "ignorar_versoes": ["1.1"],
     },
     {
         "id": "exstar-hub-desktop",
