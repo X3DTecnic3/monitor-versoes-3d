@@ -298,26 +298,60 @@
     let filtroAtual = "todos";
     let subfiltroShining = "todos";
 
-    const ordemFabricante = {
-      "Shining 3D": 1,
-      "Shining 3D / EinScan": 1,
-      "Hexagon / Geomagic": 2
-    };
+    function limparTexto(valor) {
+      return String(valor || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+    }
 
-    function normalizarFabricante(fab) {
-      if (!fab) return "Software";
-      if (fab === "Shining 3D / EinScan") return "Shining 3D";
-      return fab;
+    function normalizarFabricante(item) {
+      const fab = limparTexto(item.fabricante);
+      const combinado = `${limparTexto(item.id)} ${limparTexto(item.nome)} ${limparTexto(item.url)}`;
+
+      if (
+        fab.includes("geomagic") ||
+        fab.includes("hexagon") ||
+        combinado.includes("geomagic")
+      ) {
+        return "Hexagon / Geomagic";
+      }
+
+      if (
+        fab.includes("shining") ||
+        fab.includes("einscan") ||
+        fab.includes("einstar") ||
+        fab.includes("freescan") ||
+        combinado.includes("einstar") ||
+        combinado.includes("starvision") ||
+        combinado.includes("exstar") ||
+        combinado.includes("freescan") ||
+        combinado.includes("einscan") ||
+        combinado.includes("exscan") ||
+        combinado.includes("exmodel") ||
+        combinado.includes("transcan")
+      ) {
+        return "Shining 3D";
+      }
+
+      return item.fabricante || "Shining 3D";
     }
 
     function obterSubgrupoShining(item) {
-      const texto = `${item.id || ""} ${item.nome || ""} ${item.url || ""}`.toLowerCase();
-      if (texto.includes("einstar") || texto.includes("starvision") || texto.includes("exstar")) {
+      const texto = `${limparTexto(item.id)} ${limparTexto(item.nome)} ${limparTexto(item.url)}`;
+
+      if (
+        texto.includes("einstar") ||
+        texto.includes("starvision") ||
+        texto.includes("exstar")
+      ) {
         return "EinStar";
       }
+
       if (texto.includes("freescan")) {
         return "FreeScan";
       }
+
       return "EinScan";
     }
 
@@ -332,7 +366,7 @@
     }
 
     function formatarProximaAtualizacao(isoString) {
-      const intervaloMs = 60 * 60 * 1000; // 1 hora
+      const intervaloMs = 60 * 60 * 1000;
       const agora = Date.now();
 
       if (!isoString) {
@@ -373,9 +407,14 @@
       const grid = document.getElementById("lista-softwares");
       const banner = document.getElementById("banner-novidades");
 
+      const ordemFabricante = {
+        "Shining 3D": 1,
+        "Hexagon / Geomagic": 2
+      };
+
       const filtrados = todosSoftwares.filter((item) => {
-        const fabNormalizado = normalizarFabricante(item.fabricante);
-        if (filtroAtual !== "todos" && fabNormalizado !== filtroAtual) {
+        const fab = normalizarFabricante(item);
+        if (filtroAtual !== "todos" && fab !== filtroAtual) {
           return false;
         }
         if (filtroAtual === "Shining 3D" && subfiltroShining !== "todos") {
@@ -392,8 +431,8 @@
           return bNova - aNova;
         }
 
-        const fabA = ordemFabricante[a.fabricante] ?? 99;
-        const fabB = ordemFabricante[b.fabricante] ?? 99;
+        const fabA = ordemFabricante[normalizarFabricante(a)] ?? 99;
+        const fabB = ordemFabricante[normalizarFabricante(b)] ?? 99;
         if (fabA !== fabB) {
           return fabA - fabB;
         }
@@ -419,7 +458,7 @@
         const isNova = Boolean(item.nova_versao);
         const versao = item.versao_atual || "Não detetada";
         const dataVerificacao = item.ultima_verificacao || item.data_ultima_atualizacao;
-        const fabTexto = normalizarFabricante(item.fabricante);
+        const fabTexto = normalizarFabricante(item);
 
         return `
           <article class="cartao ${isNova ? "nova-versao" : ""}">
