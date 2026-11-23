@@ -53,6 +53,10 @@
       font-size: 0.92rem;
     }
 
+    .meta + .meta {
+      margin-top: 0.2rem;
+    }
+
     .banner-novidades {
       display: none;
       background: var(--new-bg);
@@ -68,7 +72,29 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .subfiltros {
+      display: none;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.45rem;
       margin-bottom: 1.5rem;
+      padding: 0.55rem 0.75rem;
+      background: rgba(30, 41, 59, 0.55);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+    }
+
+    .subfiltros.visivel {
+      display: flex;
+    }
+
+    .subfiltros-rotulo {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-right: 0.25rem;
     }
 
     .btn-filtro {
@@ -91,6 +117,11 @@
       color: #082f49;
       border-color: var(--accent);
       font-weight: 600;
+    }
+
+    .btn-subfiltro {
+      padding: 0.32rem 0.75rem;
+      font-size: 0.82rem;
     }
 
     .grid {
@@ -239,14 +270,23 @@
     <header>
       <h1>Monitor de Versões de Software</h1>
       <p class="meta" id="ultima-atualizacao">A carregar dados...</p>
+      <p class="meta" id="proxima-atualizacao"></p>
     </header>
 
     <div class="banner-novidades" id="banner-novidades"></div>
 
     <div class="filtros" id="filtros">
       <button class="btn-filtro ativo" data-filtro="todos">Todos</button>
-      <button class="btn-filtro" data-filtro="Shining 3D / EinScan">Shining 3D / EinScan</button>
+      <button class="btn-filtro" data-filtro="Shining 3D">Shining 3D</button>
       <button class="btn-filtro" data-filtro="Hexagon / Geomagic">Hexagon / Geomagic</button>
+    </div>
+
+    <div class="subfiltros" id="subfiltros-shining">
+      <span class="subfiltros-rotulo">Subgrupo Shining 3D:</span>
+      <button class="btn-filtro btn-subfiltro ativo" data-subfiltro="todos">Todos</button>
+      <button class="btn-filtro btn-subfiltro" data-subfiltro="EinStar">EinStar</button>
+      <button class="btn-filtro btn-subfiltro" data-subfiltro="EinScan">EinScan</button>
+      <button class="btn-filtro btn-subfiltro" data-subfiltro="FreeScan">FreeScan</button>
     </div>
 
     <main class="grid" id="lista-softwares"></main>
@@ -256,11 +296,30 @@
   <script>
     let todosSoftwares = [];
     let filtroAtual = "todos";
+    let subfiltroShining = "todos";
 
     const ordemFabricante = {
+      "Shining 3D": 1,
       "Shining 3D / EinScan": 1,
       "Hexagon / Geomagic": 2
     };
+
+    function normalizarFabricante(fab) {
+      if (!fab) return "Software";
+      if (fab === "Shining 3D / EinScan") return "Shining 3D";
+      return fab;
+    }
+
+    function obterSubgrupoShining(item) {
+      const texto = `${item.id || ""} ${item.nome || ""} ${item.url || ""}`.toLowerCase();
+      if (texto.includes("einstar") || texto.includes("starvision") || texto.includes("exstar")) {
+        return "EinStar";
+      }
+      if (texto.includes("freescan")) {
+        return "FreeScan";
+      }
+      return "EinScan";
+    }
 
     function formatarData(isoString) {
       if (!isoString) return "Sem registo";
@@ -272,13 +331,58 @@
       });
     }
 
+    function formatarProximaAtualizacao(isoString) {
+      const intervaloMs = 60 * 60 * 1000; // 1 hora
+      const agora = Date.now();
+
+      if (!isoString) {
+        return "Próxima verificação automática: daqui a ~1h";
+      }
+
+      const ultima = new Date(isoString).getTime();
+      if (Number.isNaN(ultima)) {
+        return "Próxima verificação automática: daqui a ~1h";
+      }
+
+      let proxima = ultima + intervaloMs;
+      while (proxima <= agora) {
+        proxima += intervaloMs;
+      }
+
+      const horasRestantes = Math.max(1, Math.ceil((proxima - agora) / intervaloMs));
+      const horaFormatada = new Date(proxima).toLocaleTimeString("pt-PT", {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+
+      return `Próxima verificação automática: daqui a ~${horasRestantes}h (por volta das ${horaFormatada})`;
+    }
+
+    function atualizarVisibilidadeSubfiltros() {
+      const subBox = document.getElementById("subfiltros-shining");
+      if (filtroAtual === "Shining 3D") {
+        subBox.classList.add("visivel");
+      } else {
+        subBox.classList.remove("visivel");
+      }
+    }
+
     function renderizar() {
+      atualizarVisibilidadeSubfiltros();
+
       const grid = document.getElementById("lista-softwares");
       const banner = document.getElementById("banner-novidades");
 
-      const filtrados = filtroAtual === "todos"
-        ? todosSoftwares
-        : todosSoftwares.filter((item) => item.fabricante === filtroAtual);
+      const filtrados = todosSoftwares.filter((item) => {
+        const fabNormalizado = normalizarFabricante(item.fabricante);
+        if (filtroAtual !== "todos" && fabNormalizado !== filtroAtual) {
+          return false;
+        }
+        if (filtroAtual === "Shining 3D" && subfiltroShining !== "todos") {
+          return obterSubgrupoShining(item) === subfiltroShining;
+        }
+        return true;
+      });
 
       const filtradosOrdenados = [...filtrados].sort((a, b) => {
         const aNova = a.nova_versao ? 1 : 0;
@@ -315,13 +419,14 @@
         const isNova = Boolean(item.nova_versao);
         const versao = item.versao_atual || "Não detetada";
         const dataVerificacao = item.ultima_verificacao || item.data_ultima_atualizacao;
+        const fabTexto = normalizarFabricante(item.fabricante);
 
         return `
           <article class="cartao ${isNova ? "nova-versao" : ""}">
             <div>
               <div class="topo-cartao">
                 <div>
-                  <div class="fabricante">${item.fabricante || "Software"}</div>
+                  <div class="fabricante">${fabTexto}</div>
                   <div class="titulo-software">${item.nome}</div>
                 </div>
                 ${isNova ? `<span class="badge-novo">NOVA VERSÃO</span>` : ""}
@@ -352,6 +457,7 @@
 
     async function iniciar() {
       const metaEl = document.getElementById("ultima-atualizacao");
+      const proxEl = document.getElementById("proxima-atualizacao");
       const erroEl = document.getElementById("mensagem-erro");
 
       try {
@@ -362,9 +468,11 @@
         const dados = await resposta.json();
         todosSoftwares = dados.softwares || [];
         metaEl.textContent = `Última verificação automática: ${formatarData(dados.atualizado_em)}`;
+        proxEl.textContent = formatarProximaAtualizacao(dados.atualizado_em);
         renderizar();
       } catch (erro) {
         metaEl.textContent = "Não foi possível ler o versoes.json";
+        proxEl.textContent = "";
         erroEl.innerHTML = `
           <div class="aviso-local">
             <strong>Nota ao abrir localmente:</strong> muitos navegadores bloqueiam a leitura de ficheiros locais (<code>versoes.json</code>) quando abres o <code>index.html</code> com duplo clique (<code>file://</code>).
@@ -378,9 +486,27 @@
       const botao = evento.target.closest(".btn-filtro");
       if (!botao) return;
 
-      document.querySelectorAll(".btn-filtro").forEach((b) => b.classList.remove("ativo"));
+      document.querySelectorAll("#filtros .btn-filtro").forEach((b) => b.classList.remove("ativo"));
       botao.classList.add("ativo");
       filtroAtual = botao.dataset.filtro;
+
+      if (filtroAtual !== "Shining 3D") {
+        subfiltroShining = "todos";
+        document.querySelectorAll("#subfiltros-shining .btn-subfiltro").forEach((b) => {
+          b.classList.toggle("ativo", b.dataset.subfiltro === "todos");
+        });
+      }
+
+      renderizar();
+    });
+
+    document.getElementById("subfiltros-shining").addEventListener("click", (evento) => {
+      const botao = evento.target.closest(".btn-subfiltro");
+      if (!botao) return;
+
+      document.querySelectorAll("#subfiltros-shining .btn-subfiltro").forEach((b) => b.classList.remove("ativo"));
+      botao.classList.add("ativo");
+      subfiltroShining = botao.dataset.subfiltro;
       renderizar();
     });
 
