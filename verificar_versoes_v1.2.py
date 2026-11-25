@@ -138,6 +138,28 @@ FONTES = [
         "url": "https://support.einstar.com/support/solutions/articles/60001648942-download-exstar-mobile-mobile-application-for-einstar-ez-go-einstar-rockit-einstar-2-",
         "usar_browser": False,
     },
+    {
+        "id": "shining3d-inspect-2026",
+        "nome": "Shining 3D Inspect 2026",
+        "fabricante": "Shining 3D",
+        "url": "https://support.shining3d.com/en/support/solutions/articles/60001645525-software-download-for-shining3d-inspect-2026",
+        "usar_browser": False,
+    },
+    {
+        "id": "shining3d-inspect-2026-activation",
+        "nome": "Activation Tool for Shining 3D Inspect 2026",
+        "fabricante": "Shining 3D",
+        "url": "https://support.shining3d.com/en/support/solutions/articles/60001645527-activation-tool-for-shining3d-inspect-2026",
+        "usar_browser": False,
+    },
+    # --- 3D Systems ---
+    {
+        "id": "3d-sprint",
+        "nome": "3D Sprint",
+        "fabricante": "3D Systems",
+        "url": "https://support.3dsystems.com/s/article/3D-Sprint?language=en_US",
+        "usar_browser": True,
+    },
     # --- Hexagon / Geomagic ---
     {
         "id": "geomagic-for-solidworks",
