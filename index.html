@@ -80,7 +80,7 @@
       flex-wrap: wrap;
       align-items: center;
       gap: 0.45rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 0.85rem;
       padding: 0.55rem 0.75rem;
       background: rgba(30, 41, 59, 0.55);
       border: 1px solid var(--card-border);
@@ -95,6 +95,50 @@
       font-size: 0.78rem;
       color: var(--muted);
       margin-right: 0.25rem;
+    }
+
+    .barra-pesquisa {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.35rem;
+    }
+
+    .input-pesquisa {
+      flex: 1;
+      max-width: 420px;
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--card-border);
+      padding: 0.55rem 0.9rem;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+
+    .input-pesquisa:focus {
+      border-color: var(--accent);
+    }
+
+    .input-pesquisa::placeholder {
+      color: var(--muted);
+    }
+
+    .btn-limpar {
+      background: var(--card);
+      color: var(--muted);
+      border: 1px solid var(--card-border);
+      padding: 0.52rem 0.85rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: 0.15s ease;
+    }
+
+    .btn-limpar:hover {
+      color: var(--text);
+      border-color: var(--accent);
     }
 
     .btn-filtro {
@@ -128,6 +172,17 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 1rem;
+    }
+
+    .sem-resultados {
+      grid-column: 1 / -1;
+      background: var(--card);
+      border: 1px dashed var(--card-border);
+      color: var(--muted);
+      text-align: center;
+      padding: 2rem 1rem;
+      border-radius: 12px;
+      font-size: 0.95rem;
     }
 
     .cartao {
@@ -249,6 +304,15 @@
         font-size: 1.35rem;
       }
 
+      .barra-pesquisa {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .input-pesquisa {
+        max-width: 100%;
+      }
+
       .grid {
         grid-template-columns: 1fr;
       }
@@ -290,6 +354,17 @@
       <button class="btn-filtro btn-subfiltro" data-subfiltro="FreeScan">FreeScan</button>
     </div>
 
+    <div class="barra-pesquisa">
+      <input
+        type="search"
+        id="pesquisa-software"
+        class="input-pesquisa"
+        placeholder="Pesquisar software ou versão (ex.: Vega, Sprint, 2026)..."
+        autocomplete="off"
+      />
+      <button type="button" id="btn-limpar-pesquisa" class="btn-limpar">Limpar</button>
+    </div>
+
     <main class="grid" id="lista-softwares"></main>
     <div id="mensagem-erro"></div>
   </div>
@@ -298,6 +373,7 @@
     let todosSoftwares = [];
     let filtroAtual = "todos";
     let subfiltroShining = "todos";
+    let termoPesquisa = "";
 
     function limparTexto(valor) {
       return String(valor || "")
@@ -321,14 +397,6 @@
       }
 
       if (
-        fab.includes("geomagic") ||
-        fab.includes("hexagon") ||
-        combinado.includes("geomagic")
-      ) {
-        return "Hexagon / Geomagic";
-      }
-
-      if (
         fab.includes("shining") ||
         fab.includes("einscan") ||
         fab.includes("einstar") ||
@@ -344,6 +412,14 @@
         combinado.includes("transcan")
       ) {
         return "Shining 3D";
+      }
+
+      if (
+        fab.includes("geomagic") ||
+        fab.includes("hexagon") ||
+        combinado.includes("geomagic")
+      ) {
+        return "Hexagon / Geomagic";
       }
 
       return item.fabricante || "Shining 3D";
@@ -425,6 +501,8 @@
         "3D Systems": 3
       };
 
+      const termoLimpo = limparTexto(termoPesquisa);
+
       const filtrados = todosSoftwares.filter((item) => {
         const fab = normalizarFabricante(item);
         if (filtroAtual !== "todos" && fab !== filtroAtual) {
@@ -432,6 +510,12 @@
         }
         if (filtroAtual === "Shining 3D" && subfiltroShining !== "todos") {
           return obterSubgrupoShining(item) === subfiltroShining;
+        }
+        if (termoLimpo) {
+          const alvoPesquisa = `${limparTexto(item.nome)} ${limparTexto(item.versao_atual)} ${limparTexto(fab)}`;
+          if (!alvoPesquisa.includes(termoLimpo)) {
+            return false;
+          }
         }
         return true;
       });
@@ -465,6 +549,15 @@
         banner.textContent = `Aviso: ${novidades.length} software(s) com atualização marcada como nova (${novidades.map(n => n.nome).join(", ")}).`;
       } else {
         banner.style.display = "none";
+      }
+
+      if (filtradosOrdenados.length === 0) {
+        grid.innerHTML = `
+          <div class="sem-resultados">
+            Nenhum software encontrado para o filtro ou pesquisa atual.
+          </div>
+        `;
+        return;
       }
 
       grid.innerHTML = filtradosOrdenados.map((item) => {
@@ -560,6 +653,21 @@
       botao.classList.add("ativo");
       subfiltroShining = botao.dataset.subfiltro;
       renderizar();
+    });
+
+    const inputPesquisa = document.getElementById("pesquisa-software");
+    const btnLimparPesquisa = document.getElementById("btn-limpar-pesquisa");
+
+    inputPesquisa.addEventListener("input", (evento) => {
+      termoPesquisa = evento.target.value.trim();
+      renderizar();
+    });
+
+    btnLimparPesquisa.addEventListener("click", () => {
+      inputPesquisa.value = "";
+      termoPesquisa = "";
+      renderizar();
+      inputPesquisa.focus();
     });
 
     iniciar();
