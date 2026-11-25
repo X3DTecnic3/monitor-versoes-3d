@@ -218,7 +218,7 @@ HEADERS = {
 
 # Apanha versões como 2026.1.0, 1.0.2.3 ou 1.4.0-37
 VERSION_REGEX = re.compile(
-    r"\bv?\d+\.\d+(?:\.\d+){0,3}(?:-[A-Za-z0-9._-]+)?\b",
+    r"\b(?:v|r)?\s*\d+(?:\.\d+){1,3}(?:-[A-Za-z0-9._-]+)?\b",
     re.IGNORECASE,
 )
 
@@ -295,24 +295,71 @@ def ler_texto_playwright(url: str) -> str:
         return texto_visivel
 
 
+TELEFONE_PONTOS_REGEX = re.compile(r"^\d{3,4}\.\d{3,4}\.\d{4}$")
+
+
+def _parece_telefone(match: str, linha: str) -> bool:
+    limpo = match.strip()
+    if TELEFONE_PONTOS_REGEX.match(limpo):
+        return True
+    # Deteta indicativo telefónico imediatamente antes do número (ex.: +1 888.598.1438)
+    padrao_indicativo = re.compile(r"\+\d{1,3}\s+" + re.escape(limpo))
+    if padrao_indicativo.search(linha):
+        return True
+    return False
+
+
+def _versao_deve_ser_ignorada(match: str, ignorar: list[str] | None) -> bool:
+    if not ignorar:
+        return False
+    m = match.strip().lower().lstrip("vr").strip()
+    for item in ignorar:
+        alvo = item.strip().lower().lstrip("vr").strip()
+        if m == alvo or m.startswith(alvo + "."):
+            return True
+    return False
+
+
 def escolher_versao_principal(
     texto: str, ignorar: list[str] | None = None
 ) -> tuple[str | None, list[str]]:
-    ignorados_set = {v.lower() for v in (ignorar or [])}
     linhas = texto.splitlines()
-    candidatas_ordenadas = []
+    candidatas_linhas_chave = []
+    candidatas_restantes = []
 
     for linha in linhas:
-        if re.search(r"\b(version|ver\.?|release|download|update)\b", linha, re.IGNORECASE):
-            for match in VERSION_REGEX.findall(linha):
-                if match.lower() not in ignorados_set and match not in candidatas_ordenadas:
-                    candidatas_ordenadas.append(match)
+        eh_linha_chave = bool(
+            re.search(r"\b(version|ver\.?|release|download|update)\b", linha, re.IGNORECASE)
+        )
+        for match in VERSION_REGEX.findall(linha):
+            limpo = match.strip()
+            if _parece_telefone(limpo, linha) or _versao_deve_ser_ignorada(limpo, ignorar):
+                continue
+            if eh_linha_chave:
+                if limpo not in candidatas_linhas_chave:
+                    candidatas_linhas_chave.append(limpo)
+            else:
+                if limpo not in candidatas_restantes:
+                    candidatas_restantes.append(limpo)
 
-    for match in VERSION_REGEX.findall(texto):
-        if match.lower() not in ignorados_set and match not in candidatas_ordenadas:
-            candidatas_ordenadas.append(match)
+    candidatas_ordenadas = list(candidatas_linhas_chave)
+    for c in candidatas_restantes:
+        if c not in candidatas_ordenadas:
+            candidatas_ordenadas.append(c)
 
     versao_principal = candidatas_ordenadas[0] if candidatas_ordenadas else None
+
+    # Só substitui versões curtas de 1 ponto se NÃO começarem por ano (4 dígitos, como 2026.4)
+    if versao_principal and versao_principal.count(".") == 1:
+        primeiro_bloco = versao_principal.lstrip("vVrR").strip().split(".")[0]
+        if len(primeiro_bloco) < 4:
+            mais_especifica = next(
+                (c for c in candidatas_ordenadas if c.count(".") >= 2),
+                None,
+            )
+            if mais_especifica:
+                versao_principal = mais_especifica
+
     return versao_principal, candidatas_ordenadas[:10]
 
 
