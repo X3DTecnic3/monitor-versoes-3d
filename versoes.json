@@ -395,7 +395,7 @@
         "2.1.0.3013"
       ],
       "hash_conteudo": "6972e92c1e4995b305e7630ea2b8cf06ba85faf801a44392e430e64ef4915326",
-      "nova_versao": true,
+      "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-25T17:47:32.617493+00:00",
       "ultima_verificacao": "2026-11-25T17:47:32.617493+00:00",
       "ultimo_erro": null
