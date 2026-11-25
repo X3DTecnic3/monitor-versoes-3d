@@ -358,7 +358,7 @@
         "R1.1510"
       ],
       "hash_conteudo": "41e01a870a0911db75f6623919adaa842c04934173b189bdb185bc8ccd695007",
-      "nova_versao": true,
+      "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-25T16:48:10.914963+00:00",
       "ultima_verificacao": "2026-11-25T16:48:10.914963+00:00",
       "ultimo_erro": null
@@ -376,7 +376,7 @@
         "1.0.0.2"
       ],
       "hash_conteudo": "ee6d4978284f0db8fac7adf9974e1f6fe8998e464c863e68b4d0babf3cceefde",
-      "nova_versao": true,
+      "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-25T16:48:10.914963+00:00",
       "ultima_verificacao": "2026-11-25T16:48:10.914963+00:00",
       "ultimo_erro": null
@@ -394,7 +394,7 @@
         "2026.4"
       ],
       "hash_conteudo": "8a389fbfb0b5601e0dbd311d57b37171c8fcf07503d08f0826cba61689b6d9d1",
-      "nova_versao": true,
+      "nova_versao": false,
       "data_ultima_atualizacao": "2026-11-25T16:48:10.914963+00:00",
       "ultima_verificacao": "2026-11-25T16:48:10.914963+00:00",
       "ultimo_erro": null
