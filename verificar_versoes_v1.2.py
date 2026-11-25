@@ -218,7 +218,7 @@ HEADERS = {
 
 # Apanha versões como 2026.1.0, 1.0.2.3 ou 1.4.0-37
 VERSION_REGEX = re.compile(
-    r"\b(?:v|r)?\s*\d+(?:\.\d+){1,3}(?:-[A-Za-z0-9._-]+)?\b",
+    r"\b(?:(?:20\d{2}\s+)?(?:v|r)?\s*\d+(?:\.\d+){1,3}(?:-[A-Za-z0-9._-]+)?)\b",
     re.IGNORECASE,
 )
 
@@ -312,9 +312,9 @@ def _parece_telefone(match: str, linha: str) -> bool:
 def _versao_deve_ser_ignorada(match: str, ignorar: list[str] | None) -> bool:
     if not ignorar:
         return False
-    m = match.strip().lower().lstrip("vr").strip()
+    m = re.sub(r"^20\d{2}\s+", "", match.strip().lower()).lstrip("vr").strip()
     for item in ignorar:
-        alvo = item.strip().lower().lstrip("vr").strip()
+        alvo = re.sub(r"^20\d{2}\s+", "", item.strip().lower()).lstrip("vr").strip()
         if m == alvo or m.startswith(alvo + "."):
             return True
     return False
