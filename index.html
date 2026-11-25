@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Monitor de Versões — Scanners &amp; Geomagic</title>
+  <title>Monitor de Versões — Scanners, Geomagic &amp; 3D Systems</title>
   <style>
     :root {
       --bg: #0f172a;
@@ -279,6 +279,7 @@
       <button class="btn-filtro ativo" data-filtro="todos">Todos</button>
       <button class="btn-filtro" data-filtro="Shining 3D">Shining 3D</button>
       <button class="btn-filtro" data-filtro="Hexagon / Geomagic">Hexagon / Geomagic</button>
+      <button class="btn-filtro" data-filtro="3D Systems">3D Systems</button>
     </div>
 
     <div class="subfiltros" id="subfiltros-shining">
@@ -310,6 +311,16 @@
       const combinado = `${limparTexto(item.id)} ${limparTexto(item.nome)} ${limparTexto(item.url)}`;
 
       if (
+        fab.includes("3d systems") ||
+        fab.includes("3dsystems") ||
+        combinado.includes("3dsystems") ||
+        combinado.includes("3d-sprint") ||
+        combinado.includes("3d sprint")
+      ) {
+        return "3D Systems";
+      }
+
+      if (
         fab.includes("geomagic") ||
         fab.includes("hexagon") ||
         combinado.includes("geomagic")
@@ -322,6 +333,7 @@
         fab.includes("einscan") ||
         fab.includes("einstar") ||
         fab.includes("freescan") ||
+        combinado.includes("shining3d") ||
         combinado.includes("einstar") ||
         combinado.includes("starvision") ||
         combinado.includes("exstar") ||
@@ -409,7 +421,8 @@
 
       const ordemFabricante = {
         "Shining 3D": 1,
-        "Hexagon / Geomagic": 2
+        "Hexagon / Geomagic": 2,
+        "3D Systems": 3
       };
 
       const filtrados = todosSoftwares.filter((item) => {
