@@ -152,6 +152,13 @@ FONTES = [
         "url": "https://support.shining3d.com/en/support/solutions/articles/60001645527-activation-tool-for-shining3d-inspect-2026",
         "usar_browser": False,
     },
+    {
+        "id": "geomagic-essentials-shining3d",
+        "nome": "Geomagic Essentials (Shining 3D)",
+        "fabricante": "Shining 3D",
+        "url": "https://support.einscan.com/en/support/solutions/articles/60001004958-geomagic-essentials",
+        "usar_browser": False,
+    },
     # --- 3D Systems ---
     {
         "id": "3d-sprint",
